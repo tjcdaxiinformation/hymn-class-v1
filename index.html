@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>合聲與指揮課 - 神祕點名轉盤</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: linear-gradient(135deg, #1a1c29 0%, #10111a 100%);
+            color: #fff;
+            font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #00f2fe, 0 0 20px #4facfe;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+        /* 轉盤外框與指針 */
+        .wheel-wrapper {
+            position: relative;
+            width: 450px;
+            height: 450px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 30px rgba(79, 172, 254, 0.3);
+            border-radius: 50%;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .pointer {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 40px solid #ff007f;
+            filter: drop-shadow(0 0 8px #ff007f);
+            z-index: 10;
+        }
+        canvas {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            transition: transform 4s cubic-bezier(0.1, 0.8, 0.1, 1);
+        }
+        /* 按鈕風格 */
+        .btn-spin {
+            background: linear-gradient(45deg, #00f2fe 0%, #4facfe 100%);
+            color: #10111a;
+            font-size: 1.8rem;
+            font-weight: bold;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 15px #00f2fe;
+            transition: all 0.2s ease;
+        }
+        .btn-spin:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px #00f2fe, 0 0 40px #4facfe;
+        }
+        .btn-spin:disabled {
+            background: #555;
+            color: #888;
+            box-shadow: none;
+            cursor: not-allowed;
+            transform: none;
+        }
+        /* 中獎彈窗 */
+        .winner-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+            z-index: 100;
+        }
+        .winner-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .winner-card {
+            background: linear-gradient(135deg, #2a0845 0%, #6441a5 100%);
+            padding: 5px;
+            border-radius: 20px;
+            box-shadow: 0 0 50px #ff007f;
+            text-align: center;
+            transform: scale(0.7);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: 80%;
+            max-width: 500px;
+        }
+        .winner-overlay.active .winner-card {
+            transform: scale(1);
+        }
+        .winner-title {
+            font-size: 2rem;
+            color: #00f2fe;
+            margin: 20px 0;
+        }
+        .winner-name {
+            font-size: 4.5rem;
+            font-weight: 900;
+            color: #fff;
+            text-shadow: 0 0 20px #fff, 0 0 30px #ff007f;
+            margin-bottom: 30px;
+        }
+        .btn-close {
+            background: #fff;
+            color: #2a0845;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-close:hover {
+            background: #ff007f;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🎵 誰是天籟指揮大師？ 🎵</h1>
+
+    <div class="container">
+        <div class="wheel-wrapper">
+            <div class="pointer"></div>
+            <canvas id="wheel" width="500" height="500"></canvas>
+        </div>
+        <button class="btn-spin" id="spinBtn" onclick="spinWheel()">🔥 開始狂飆轉盤 🔥</button>
+    </div>
+
+    <!-- 中獎彈出視窗 -->
+    <div class="winner-overlay" id="winnerOverlay">
+        <div class="winner-card">
+            <div class="winner-title">👑 本次命定的指揮大師 👑</div>
+            <div class="winner-name" id="winnerName">???</div>
+            <button class="btn-close" onclick="closeOverlay()">上台掌鏡！</button>
+        </div>
+    </div>
+
+    <script>
+        // 現場 4-6 位學員名單（可自由修改名字）
+        const students = ["阿信", "保羅", "尤幹", "瓦旦", "哈勇", "莎韻"];
+        
+        // 繽紛亮眼的顏色矩陣
+        const colors = ["#ff007f", "#7f00ff", "#00f2fe", "#00ff7f", "#ffcf00", "#ff5f00"];
+
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const numSegments = students.length;
+        const segmentAngle = (2 * Math.PI) / numSegments;
+        let currentRotation = 0;
+
+        // 初始化畫布：繪製轉盤與名字
+        function drawWheel() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < numSegments; i++) {
+                const angle = i * segmentAngle;
+                
+                // 畫扇形
+                ctx.beginPath();
+                ctx.fillStyle = colors[i % colors.length];
+                ctx.moveTo(250, 250);
+                ctx.arc(250, 250, 240, angle, angle + segmentAngle);
+                ctx.lineTo(250, 250);
+                ctx.fill();
+                ctx.strokeStyle = "#10111a";
+                ctx.lineWidth = 4;
+                ctx.stroke();
+
+                // 寫名字
+                ctx.save();
+                ctx.translate(250, 250);
+                ctx.rotate(angle + segmentAngle / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                // 幫文字加點黑邊，在大螢幕更清晰
+                ctx.shadowColor = "black";
+                ctx.shadowBlur = 6;
+                ctx.lineWidth = 5;
+                ctx.font = "bold 28px sans-serif";
+                ctx.fillText(students[i], 220, 10);
+                ctx.restore();
+            }
+        }
+
+        // 呼叫原生瀏覽器音訊庫（不需外部音檔，不怕沒網路）
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        function playTickSound() {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.type = "sine";
+            osc.frequency.setValueAtTime(600, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.05);
+        }
+
+        function playWinSound() {
+            // 彈奏一個大三和弦 (C-E-G-C) 歡慶天籟誕生
+            const now = audioCtx.currentTime;
+            [261.63, 329.63, 392.00, 523.25].forEach((freq, index) => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.type = "triangle"; // 聽起來像電子琴
+                osc.frequency.setValueAtTime(freq, now + index * 0.08);
+                gain.gain.setValueAtTime(0.15, now + index * 0.08);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.6);
+                osc.start(now + index * 0.08);
+                osc.stop(now + 0.6);
+            });
+        }
+
+        // 旋轉邏輯
+        function spinWheel() {
+            audioCtx.resume(); // 確保解鎖音訊
+            spinBtn.disabled = true;
+
+            // 隨機多轉 4 到 6 圈 + 隨機角度
+            const extraDegrees = Math.floor(Math.random() * 360);
+            const totalSpins = 4 * 360 + extraDegrees;
+            currentRotation += totalSpins;
+
+            // 運用 CSS transition 做滑順的模擬減速
+            canvas.style.transform = `rotate(${currentRotation}deg)`;
+
+            // 模擬轉動時的「嘀嗒」音效
+            let tickCount = 0;
+            const totalTicks = 25;
+            function runTick() {
+                if (tickCount < totalTicks) {
+                    playTickSound();
+                    tickCount++;
+                    // 越後面間隔越長（模擬減速）
+                    setTimeout(runTick, 100 + (tickCount * 12));
+                }
+            }
+            runTick();
+
+            // 4 秒後（對應 CSS transition 4s）計算誰中獎
+            setTimeout(() => {
+                // 計算停止後的指針落點 (指針在正上方，即 -90 度或 270 度位置)
+                const actualDegrees = (currentRotation % 360);
+                // 轉換為 Canvas 座標系中的弧度落點
+                const pointerAngle = (((270 - actualDegrees) % 360 + 360) % 360) * Math.PI / 180;
+                
+                let winnerIndex = Math.floor(pointerAngle / segmentAngle) % numSegments;
+                if(winnerIndex < 0) winnerIndex += numSegments;
+
+                // 秀出中獎畫面並彈奏和弦
+                document.getElementById("winnerName").innerText = students[winnerIndex];
+                document.getElementById("winnerOverlay").classList.add("active");
+                playWinSound();
+            }, 4000);
+        }
+
+        function closeOverlay() {
+            document.getElementById("winnerOverlay").classList.remove("active");
+            spinBtn.disabled = false;
+        }
+
+        // 初始繪製
+        drawWheel();
+    </script>
+</body>
+</html>
