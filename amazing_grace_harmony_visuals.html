@@ -1,0 +1,266 @@
+[slides]
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>奇異恩典 - 全曲彩色簡譜</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@700;900&family=Noto+Sans+TC:wght@500;900&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            background-color: #020617;
+            display: grid;
+            gap: 40px;
+            grid-template-columns: 1fr;
+            margin: 0;
+            min-height: 100vh;
+            padding: 40px 0;
+            place-items: center;
+            color: #f8fafc;
+            font-family: 'Urbanist', 'Noto Sans TC', sans-serif;
+        }
+
+        .slide-container {
+            align-items: center;
+            background-color: #0f172a;
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: column;
+            height: 720px;
+            justify-content: space-between;
+            overflow: hidden;
+            padding: 40px 50px;
+            position: relative;
+            width: 1280px;
+        }
+
+        .slide-container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 90% 10%, rgba(59, 130, 246, 0.1), transparent 40%),
+                        radial-gradient(circle at 10% 90%, rgba(244, 63, 94, 0.08), transparent 40%);
+            z-index: 0;
+        }
+
+        .slide-container > * { position: relative; z-index: 1; }
+        
+        .slide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            border-bottom: 2px solid #334155;
+            padding-bottom: 15px;
+        }
+        
+        .slide-title { font-size: 38px; font-weight: 900; color: #fbbf24; margin: 0; }
+        .slide-info { font-size: 20px; color: #94a3b8; font-weight: bold; }
+
+        /* 四部合聲大圖表結構 */
+        .score-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .part-row {
+            height: 95px;
+        }
+
+        .part-label {
+            width: 110px;
+            font-size: 22px;
+            font-weight: 900;
+            text-align: center;
+            border-right: 3px solid #475569;
+        }
+
+        /* 聲部亮色系指定 */
+        .s-part { color: #ff719a; } /* 女高音 Soprano - 玫瑰紅 */
+        .a-part { color: #4ade80; } /* 女低音 Alto - 螢光綠 */
+        .t-part { color: #38bdf8; } /* 男高音 Tenor - 天空藍 */
+        .b-part { color: #a855f7; } /* 男低音 Bass - 魅惑紫 */
+        .l-part { color: #f8fafc; font-size: 28px; font-weight: 900; } /* 歌詞 */
+
+        .measure-cell {
+            text-align: center;
+            font-size: 42px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            width: 155px;
+            border-right: 1px dashed #334155;
+            position: relative;
+        }
+
+        .measure-cell:last-child {
+            border-right: 3px double #475569;
+        }
+
+        /* 附點與高低音點的微調樣式 */
+        .dot { display: inline-block; position: relative; }
+        .dot-under::after { content: '•'; position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); font-size: 24px; }
+        .dot-above::before { content: '•'; position: absolute; top: -25px; left: 50%; transform: translateX(-50%); font-size: 24px; }
+
+        .slide-footer {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            width: 100%;
+            font-size: 18px;
+            color: #64748b;
+            font-weight: bold;
+            border-top: 1px solid #1e293b;
+            padding-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="slide-container" id="slide1">
+    <div class="slide-header">
+        <div class="slide-title">奇異恩典 (Amazing Grace)</div>
+        <div class="slide-info">G大調 3/4拍 (Page 1 / 3)</div>
+    </div>
+
+    <table class="score-table">
+        <tr class="part-row s-part">
+            <td class="part-label">Soprano</td>
+            <td class="measure-cell" style="width: 80px;">5</td>
+            <td class="measure-cell">1 - 3 1</td>
+            <td class="measure-cell">3 - 2</td>
+            <td class="measure-cell">1 - 6</td>
+            <td class="measure-cell">5 - 5</td>
+            <td class="measure-cell">1 - 3 1</td>
+            <td class="measure-cell">3 - 2</td>
+            <td class="measure-cell">5 -</td>
+        </tr>
+        <tr class="part-row a-part">
+            <td class="part-label">Alto</td>
+            <td class="measure-cell">3</td>
+            <td class="measure-cell">3 - 5</td>
+            <td class="measure-cell">5 - 4</td>
+            <td class="measure-cell">3 - 4</td>
+            <td class="measure-cell">3 - 3</td>
+            <td class="measure-cell">3 - 5</td>
+            <td class="measure-cell">5 - 5</td>
+            <td class="measure-cell">5 -</td>
+        </tr>
+        <tr class="part-row l-part">
+            <td class="part-label" style="color: #64748b; font-size: 18px;">歌詞</td>
+            <td class="measure-cell" style="font-size: 24px; color: #94a3b8;">(前奏)</td>
+            <td class="measure-cell">何等奇</td>
+            <td class="measure-cell">妙，救</td>
+            <td class="measure-cell">主愛</td>
+            <td class="measure-cell">憐，救</td>
+            <td class="measure-cell">我深</td>
+            <td class="measure-cell">重罪</td>
+            <td class="measure-cell">犯！</td>
+        </tr>
+        <tr class="part-row t-part">
+            <td class="part-label">Tenor</td>
+            <td class="measure-cell">1</td>
+            <td class="measure-cell">5 - 1</td>
+            <td class="measure-cell">1 - 7<span class="dot dot-under"></span></td>
+            <td class="measure-cell">1 - 1</td>
+            <td class="measure-cell">1 - 1</td>
+            <td class="measure-cell">5 - 1</td>
+            <td class="measure-cell">1 - 7<span class="dot dot-under"></span></td>
+            <td class="measure-cell">1 -</td>
+        </tr>
+        <tr class="part-row b-part">
+            <td class="part-label">Bass</td>
+            <td class="measure-cell">1</td>
+            <td class="measure-cell">1 - 1 3</td>
+            <td class="measure-cell">5 - 5</td>
+            <td class="measure-cell">6 - 4</td>
+            <td class="measure-cell">1 - 1</td>
+            <td class="measure-cell">1 - 1 3</td>
+            <td class="measure-cell">5 - 4</td>
+            <td class="measure-cell">3 -</td>
+        </tr>
+    </table>
+
+    <div class="slide-footer">
+        <span>🔴 粉紅：高音組</span>
+        <span>🟢 翠綠：中音組</span>
+        <span>🔵 藍紫：低音部對齊</span>
+    </div>
+</div>
+
+<div class="slide-container" id="slide2">
+    <div class="slide-header">
+        <div class="slide-title">奇異恩典 (Amazing Grace)</div>
+        <div class="slide-info">G大調 3/4拍 (Page 2 / 3)</div>
+    </div>
+
+    <table class="score-table">
+        <tr class="part-row s-part">
+            <td class="part-label">Soprano</td>
+            <td class="measure-cell" style="width: 80px;">3</td>
+            <td class="measure-cell">5 . 3 5 3</td>
+            <td class="measure-cell">1 - 5</td>
+            <td class="measure-cell">6 . 1 1 6</td>
+            <td class="measure-cell">5 - 5</td>
+            <td class="measure-cell">1 - 3 1</td>
+            <td class="measure-cell">3 - 2</td>
+            <td class="measure-cell">1 -</td>
+        </tr>
+        <tr class="part-row a-part">
+            <td class="part-label">Alto</td>
+            <td class="measure-cell">5</td>
+            <td class="measure-cell">5 - 5</td>
+            <td class="measure-cell">5 - 3</td>
+            <td class="measure-cell">4 . 5 4</td>
+            <td class="measure-cell">3 - 5</td>
+            <td class="measure-cell">3 - 5</td>
+            <td class="measure-cell">1 - 7<span class="dot dot-under"></span></td>
+            <td class="measure-cell">1 -</td>
+        </tr>
+        <tr class="part-row l-part">
+            <td class="part-label" style="color: #64748b; font-size: 18px;">歌詞</td>
+            <td class="measure-cell">我</td>
+            <td class="measure-cell">前失</td>
+            <td class="measure-cell">喪，今</td>
+            <td class="measure-cell">被尋</td>
+            <td class="measure-cell">回，瞎</td>
+            <td class="measure-cell">眼今</td>
+            <td class="measure-cell">得看</td>
+            <td class="measure-cell">見。。。。</td>
+        </tr>
+        <tr class="part-row t-part">
+            <td class="part-label">Tenor</td>
+            <td class="measure-cell">1</td>
+            <td class="measure-cell">3 . 1 3 1</td>
+            <td class="measure-cell">1 - 1</td>
+            <td class="measure-cell">1 - 6 1</td>
+            <td class="measure-cell">1 - 1</td>
+            <td class="measure-cell">1 - 1 3</td>
+            <td class="measure-cell">5 - 4</td>
+            <td class="measure-cell">3 -</td>
+        </tr>
+        <tr class="part-row b-part">
+            <td class="part-label">Bass</td>
+            <td class="measure-cell">1</td>
+            <td class="measure-cell">1 - 1</td>
+            <td class="measure-cell">3 - 1</td>
+            <td class="measure-cell">4 . 3 4</td>
+            <td class="measure-cell">1 - 3</td>
+            <td class="measure-cell">6 - 5</td>
+            <td class="measure-cell">5 - 5</td>
+            <td class="measure-cell">1 -</td>
+        </tr>
+    </table>
+
+    <div class="slide-footer">
+        <span>看準自己聲部的顏色，聽電子琴引導切入</span>
+    </div>
+</div>
+
+</body>
+</html>
+
