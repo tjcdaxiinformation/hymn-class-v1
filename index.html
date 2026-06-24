@@ -1,308 +1,296 @@
+[slides]
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>合聲與指揮課 - 神祕點名轉盤</title>
+    <title>奇異恩典：合聲體驗視覺教材</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;700&family=Noto+Sans+TC:wght@500;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        /* 核心設計規範：專為大螢幕投影優化 */
+        * { box-sizing: border-box; }
         body {
-            background: linear-gradient(135deg, #1a1c29 0%, #10111a 100%);
-            color: #fff;
-            font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            background-color: #020617;
+            display: grid;
+            gap: 20px;
+            grid-template-columns: 1fr;
+            margin: 0;
             min-height: 100vh;
-            overflow: hidden;
+            padding: 20px 0;
+            place-items: center;
+            color: #f8fafc;
         }
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            text-shadow: 0 0 10px #00f2fe, 0 0 20px #4facfe;
-            letter-spacing: 2px;
-            text-align: center;
-        }
-        .container {
+
+        .slide-container {
+            align-items: center;
+            background-color: #0f172a;
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
             display: flex;
             flex-direction: column;
-            align-items: center;
-            position: relative;
-        }
-        /* 轉盤外框與指針 */
-        .wheel-wrapper {
-            position: relative;
-            width: 450px;
-            height: 450px;
-            margin-bottom: 30px;
-            box-shadow: 0 0 30px rgba(79, 172, 254, 0.3);
-            border-radius: 50%;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.05);
-        }
-        .pointer {
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 20px solid transparent;
-            border-right: 20px solid transparent;
-            border-top: 40px solid #ff007f;
-            filter: drop-shadow(0 0 8px #ff007f);
-            z-index: 10;
-        }
-        canvas {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            transition: transform 4s cubic-bezier(0.1, 0.8, 0.1, 1);
-        }
-        /* 按鈕風格 */
-        .btn-spin {
-            background: linear-gradient(45deg, #00f2fe 0%, #4facfe 100%);
-            color: #10111a;
-            font-size: 1.8rem;
-            font-weight: bold;
-            padding: 15px 40px;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 0 15px #00f2fe;
-            transition: all 0.2s ease;
-        }
-        .btn-spin:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 25px #00f2fe, 0 0 40px #4facfe;
-        }
-        .btn-spin:disabled {
-            background: #555;
-            color: #888;
-            box-shadow: none;
-            cursor: not-allowed;
-            transform: none;
-        }
-        /* 中獎彈窗 */
-        .winner-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.85);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            font-family: 'Urbanist', 'Noto Sans TC', sans-serif;
+            height: 720px;
             justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.5s ease;
-            z-index: 100;
+            overflow: hidden;
+            padding: 60px;
+            position: relative;
+            width: 1280px;
         }
-        .winner-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
+
+        /* 裝飾性背景：泰雅織紋感與音樂波律 */
+        .slide-container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 10% 10%, rgba(244, 63, 94, 0.1), transparent 40%),
+                        radial-gradient(circle at 90% 90%, rgba(59, 130, 246, 0.15), transparent 40%);
+            z-index: 0;
         }
-        .winner-card {
-            background: linear-gradient(135deg, #2a0845 0%, #6441a5 100%);
-            padding: 5px;
-            border-radius: 20px;
-            box-shadow: 0 0 50px #ff007f;
-            text-align: center;
-            transform: scale(0.7);
-            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            width: 80%;
-            max-width: 500px;
-        }
-        .winner-overlay.active .winner-card {
-            transform: scale(1);
-        }
-        .winner-title {
-            font-size: 2rem;
-            color: #00f2fe;
-            margin: 20px 0;
-        }
-        .winner-name {
-            font-size: 4.5rem;
-            font-weight: 900;
-            color: #fff;
-            text-shadow: 0 0 20px #fff, 0 0 30px #ff007f;
-            margin-bottom: 30px;
-        }
-        .btn-close {
-            background: #fff;
-            color: #2a0845;
-            border: none;
-            padding: 12px 30px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .btn-close:hover {
-            background: #ff007f;
-            color: #fff;
-        }
+
+        .slide-container > * { position: relative; z-index: 1; }
+
+        /* 字體與顏色規範 */
+        h1 { font-size: 85px; font-weight: 900; color: #fbbf24; margin: 0; text-shadow: 0 4px 12px rgba(0,0,0,0.5); }
+        .slide-title { font-size: 48px; font-weight: 900; margin-bottom: 40px; text-align: left; width: 100%; color: #60a5fa; border-left: 12px solid #fbbf24; padding-left: 25px; }
+        
+        /* 簡譜專用樣式 */
+        .jianpu-container { width: 100%; background: rgba(30, 41, 59, 0.8); border-radius: 20px; padding: 30px; border: 1px solid #334155; }
+        .jianpu-row { display: flex; align-items: flex-start; margin-bottom: 25px; font-family: monospace; }
+        .jianpu-label { width: 150px; font-size: 24px; font-weight: 700; padding-top: 10px; }
+        .jianpu-notes { display: flex; flex-grow: 1; gap: 30px; font-size: 56px; font-weight: 900; letter-spacing: 5px; }
+        
+        /* 聲部顏色 */
+        .c-high { color: #fb7185; }  /* 高音部 - 玫瑰紅 */
+        .c-mid { color: #4ade80; }   /* 中音部 - 翠綠 */
+        .c-low { color: #60a5fa; }   /* 低音部 - 寶石藍 */
+        .c-chord { color: #facc15; } /* 和弦 - 亮金 */
+        .c-lyric { color: #f8fafc; font-size: 32px; font-family: 'Noto Sans TC'; margin-top: 10px; }
+
+        /* 版式定義 */
+        .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; width: 100%; }
+        .content-area { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; width: 100%; }
+        
+        .chord-box { background: #fbbf24; color: #020617; padding: 10px 20px; border-radius: 12px; font-size: 48px; font-weight: 900; display: inline-block; margin-bottom: 15px; }
+
+        .tile { background: #1e293b; padding: 30px; border-radius: 20px; text-align: center; border: 1px solid #334155; }
+        .tile i { font-size: 40px; color: #fbbf24; margin-bottom: 15px; }
+        
+        /* 表格樣式 */
+        table { width: 100%; border-collapse: collapse; }
+        th { font-size: 24px; color: #94a3b8; text-align: left; padding: 15px; border-bottom: 2px solid #334155; }
+        td { padding: 20px 15px; font-size: 42px; font-weight: 900; border-bottom: 1px solid #1e293b; }
+
+        .quote-layout blockquote { font-size: 52px; font-style: italic; line-height: 1.3; color: #f1f5f9; text-align: center; }
     </style>
 </head>
 <body>
 
-    <h1>🎵 誰是天籟指揮大師？ 🎵</h1>
-
-    <div class="container">
-        <div class="wheel-wrapper">
-            <div class="pointer"></div>
-            <canvas id="wheel" width="500" height="500"></canvas>
-        </div>
-        <button class="btn-spin" id="spinBtn" onclick="spinWheel()">🔥 開始狂飆轉盤 🔥</button>
+<div class="slide-container" id="slide1" style="background-image: linear-gradient(rgba(2, 6, 23, 0.8), rgba(2, 6, 23, 0.8)), url('http://googleusercontent.com/image_collection/image_retrieval/4983944559989458604'); background-size: cover;">
+    <div style="text-align: center;">
+        <h1>奇異恩典</h1>
+        <div style="font-size: 48px; color: #60a5fa; margin-top: 20px; font-weight: 700;">Amazing Grace</div>
+        <div style="font-size: 32px; color: #fbbf24; margin-top: 40px; letter-spacing: 5px;">天籟合聲・彩色簡譜互動教材</div>
     </div>
+</div>
 
-    <!-- 中獎彈出視窗 -->
-    <div class="winner-overlay" id="winnerOverlay">
-        <div class="winner-card">
-            <div class="winner-title">👑 本次命定的指揮大師 👑</div>
-            <div class="winner-name" id="winnerName">???</div>
-            <button class="btn-close" onclick="closeOverlay()">上台掌鏡！</button>
+<div class="slide-container" id="slide2">
+    <h2 class="slide-title">彩色聲部引導：聽見你的顏色</h2>
+    <div class="content-area">
+        <div style="display: flex; justify-content: space-around; width: 100%;">
+            <div class="tile" style="flex: 1; margin: 0 15px; border-top: 8px solid #fb7185;">
+                <i class="fa-solid fa-sun"></i>
+                <h3 class="c-high">太陽 (高音部)</h3>
+                <p>引領旋律的主角<br>清澈、明亮</p>
+            </div>
+            <div class="tile" style="flex: 1; margin: 0 15px; border-top: 8px solid #4ade80;">
+                <i class="fa-solid fa-leaf"></i>
+                <h3 class="c-mid">森林 (中音部)</h3>
+                <p>填補空間的溫暖<br>柔和、豐滿</p>
+            </div>
+            <div class="tile" style="flex: 1; margin: 0 15px; border-top: 8px solid #60a5fa;">
+                <i class="fa-solid fa-mountain"></i>
+                <h3 class="c-low">山谷 (低音部)</h3>
+                <p>穩定大地的基石<br>深沉、厚實</p>
+            </div>
         </div>
     </div>
+</div>
 
-    <script>
-        // 現場 4-6 位學員名單（可自由修改名字）
-        const students = ["阿信", "保羅", "尤幹", "瓦旦", "哈勇", "莎韻"];
-        
-        // 繽紛亮眼的顏色矩陣
-        const colors = ["#ff007f", "#7f00ff", "#00f2fe", "#00ff7f", "#ffcf00", "#ff5f00"];
+<div class="slide-container" id="slide3">
+    <h2 class="slide-title">第一句：奇異恩典，何等甘甜</h2>
+    <div class="content-area">
+        <div class="jianpu-container">
+            <div class="jianpu-row">
+                <div class="jianpu-label c-chord">和弦 (琴)</div>
+                <div class="jianpu-notes c-chord" style="font-size: 40px;">G - - | G - - | C - - | G - -</div>
+            </div>
+            <div class="jianpu-row">
+                <div class="jianpu-label c-high">高音部</div>
+                <div class="jianpu-notes c-high">
+                    <div>3 | 1 - 3 | 3 2 | 1 - 1 | 6 - 5 | 5 -</div>
+                </div>
+            </div>
+            <div class="jianpu-row">
+                <div class="jianpu-label c-mid">中音部</div>
+                <div class="jianpu-notes c-mid">
+                    <div>3 | 3 - 5 | 5 4 | 3 - 3 | 1 - 3 | 3 -</div>
+                </div>
+            </div>
+            <div class="jianpu-row">
+                <div class="jianpu-label" style="color: #94a3b8;">歌詞</div>
+                <div class="jianpu-notes c-lyric">
+                    <div>(奇) | 異 - (恩) | 典 - 何 | 等 - (甘) | 甜 - - | - -</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-        const canvas = document.getElementById("wheel");
-        const ctx = canvas.getContext("2d");
-        const spinBtn = document.getElementById("spinBtn");
-        const numSegments = students.length;
-        const segmentAngle = (2 * Math.PI) / numSegments;
-        let currentRotation = 0;
+<div class="slide-container" id="slide4">
+    <h2 class="slide-title">第二句：我罪已得赦免</h2>
+    <div class="content-area">
+        <div class="jianpu-container">
+            <div class="jianpu-row">
+                <div class="jianpu-label c-chord">和弦 (琴)</div>
+                <div class="jianpu-notes c-chord" style="font-size: 40px;">G - - | G - - | G - - | D - - | G - -</div>
+            </div>
+            <div class="jianpu-row">
+                <div class="jianpu-label c-high">高音部</div>
+                <div class="jianpu-notes c-high">
+                    <div>3 | 1 - 3 | 3 2 | 1 - 1 | 2 - - | 5 -</div>
+                </div>
+            </div>
+            <div class="jianpu-row">
+                <div class="jianpu-label c-mid">中音部</div>
+                <div class="jianpu-notes c-mid">
+                    <div>3 | 3 - 5 | 5 4 | 3 - 3 | 4 - - | 7 -</div>
+                </div>
+            </div>
+            <div class="jianpu-row">
+                <div class="jianpu-label" style="color: #94a3b8;">歌詞</div>
+                <div class="jianpu-notes c-lyric">
+                    <div>(我) | 罪 - (已) | 得 - 赦 | 免 - ( - ) | - - - | -</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-        // 初始化畫布：繪製轉盤與名字
-        function drawWheel() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < numSegments; i++) {
-                const angle = i * segmentAngle;
-                
-                // 畫扇形
-                ctx.beginPath();
-                ctx.fillStyle = colors[i % colors.length];
-                ctx.moveTo(250, 250);
-                ctx.arc(250, 250, 240, angle, angle + segmentAngle);
-                ctx.lineTo(250, 250);
-                ctx.fill();
-                ctx.strokeStyle = "#10111a";
-                ctx.lineWidth = 4;
-                ctx.stroke();
+<div class="slide-container" id="slide5">
+    <h2 class="slide-title">山谷的力量：穩定低音 (Bass)</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <h3>低音組任務</h3>
+                <p>司琴彈奏和弦根音，低音組同學看著數字唱出如山脈般的穩定感：</p>
+                <div class="jianpu-container" style="margin-top: 20px;">
+                    <div class="jianpu-notes c-low" style="font-size: 80px;">
+                        5_ . 1_ . 5_ . 2_ . 5_
+                    </div>
+                    <div class="c-lyric" style="text-align: center;">咚 . 咚 . 咚 . 咚 . 咚</div>
+                </div>
+            </div>
+            <div class="image-wrapper">
+                <img src="http://googleusercontent.com/image_collection/image_retrieval/16476658981232659273" alt="Piano bass keys">
+            </div>
+        </div>
+    </div>
+</div>
 
-                // 寫名字
-                ctx.save();
-                ctx.translate(250, 250);
-                ctx.rotate(angle + segmentAngle / 2);
-                ctx.textAlign = "right";
-                ctx.fillStyle = "#fff";
-                // 幫文字加點黑邊，在大螢幕更清晰
-                ctx.shadowColor = "black";
-                ctx.shadowBlur = 6;
-                ctx.lineWidth = 5;
-                ctx.font = "bold 28px sans-serif";
-                ctx.fillText(students[i], 220, 10);
-                ctx.restore();
-            }
-        }
+<div class="slide-container" id="slide6">
+    <h2 class="slide-title">司琴配合手冊 (Piano Guide)</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <div class="chord-box">G Major</div>
+                <p>左手強調強拍 (1)，右手輕彈 (2, 3)</p>
+                <div class="chord-box">C Major</div>
+                <p>增加溫暖感，引導中音部進入</p>
+                <div class="chord-box">D Major</div>
+                <p>在句尾創造懸念，準備回到 G</p>
+            </div>
+            <div class="image-wrapper">
+                <img src="http://googleusercontent.com/image_collection/image_retrieval/6499959961721726842" alt="Sound wave visualization">
+            </div>
+        </div>
+    </div>
+</div>
 
-        // 呼叫原生瀏覽器音訊庫（不需外部音檔，不怕沒網路）
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        
-        function playTickSound() {
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.type = "sine";
-            osc.frequency.setValueAtTime(600, audioCtx.currentTime);
-            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.05);
-        }
+<div class="slide-container" id="slide7">
+    <h2 class="slide-title">合聲堆疊實驗 (Step-by-Step)</h2>
+    <div class="content-area">
+        <table>
+            <thead>
+                <tr>
+                    <th>步驟</th>
+                    <th>加入成員</th>
+                    <th>視覺訊號</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1. 啟航</td>
+                    <td>司琴彈奏前奏</td>
+                    <td class="c-chord">黃色燈光</td>
+                </tr>
+                <tr>
+                    <td>2. 根基</td>
+                    <td>低音組加入 (咚...)</td>
+                    <td class="c-low">藍色燈光</td>
+                </tr>
+                <tr>
+                    <td>3. 靈魂</td>
+                    <td>高音組唱出主旋律</td>
+                    <td class="c-high">粉色燈光</td>
+                </tr>
+                <tr>
+                    <td>4. 天籟</td>
+                    <td>中音組切入三度合音</td>
+                    <td class="c-mid">綠色燈光</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 
-        function playWinSound() {
-            // 彈奏一個大三和弦 (C-E-G-C) 歡慶天籟誕生
-            const now = audioCtx.currentTime;
-            [261.63, 329.63, 392.00, 523.25].forEach((freq, index) => {
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.type = "triangle"; // 聽起來像電子琴
-                osc.frequency.setValueAtTime(freq, now + index * 0.08);
-                gain.gain.setValueAtTime(0.15, now + index * 0.08);
-                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.6);
-                osc.start(now + index * 0.08);
-                osc.stop(now + 0.6);
-            });
-        }
+<div class="slide-container" id="slide8">
+    <div class="content-area">
+        <div class="quote-layout">
+            <blockquote>泰雅的聲音，是與山林的對話。<br>當我們合聲，我們便是一座完整的森林。</blockquote>
+            <cite style="font-size: 28px; color: #fbbf24;">— 音樂靈魂的覺醒</cite>
+        </div>
+    </div>
+</div>
 
-        // 旋轉邏輯
-        function spinWheel() {
-            audioCtx.resume(); // 確保解鎖音訊
-            spinBtn.disabled = true;
+<div class="slide-container" id="slide9">
+    <h2 class="slide-title">現場實戰練習</h2>
+    <div class="content-area">
+        <div class="tiled-content" style="display: flex; gap: 30px;">
+            <div class="tile" style="flex: 1;">
+                <div style="font-size: 32px; font-weight: 700; margin-bottom: 10px;">練習 1</div>
+                <p>全班齊唱<br>熟悉數字與節奏</p>
+            </div>
+            <div class="tile" style="flex: 1;">
+                <div style="font-size: 32px; font-weight: 700; margin-bottom: 10px;">練習 2</div>
+                <p>分組合音<br>看著顏色找對手</p>
+            </div>
+            <div class="tile" style="flex: 1;">
+                <div style="font-size: 32px; font-weight: 700; margin-bottom: 10px;">練習 3</div>
+                <p>閉上眼睛<br>用耳朵尋找彼此</p>
+            </div>
+        </div>
+    </div>
+</div>
 
-            // 隨機多轉 4 到 6 圈 + 隨機角度
-            const extraDegrees = Math.floor(Math.random() * 360);
-            const totalSpins = 4 * 360 + extraDegrees;
-            currentRotation += totalSpins;
+<div class="slide-container" id="slide10" style="text-align: center;">
+    <h1 style="font-size: 100px;">讚美詩合聲課</h1>
+    <div style="font-size: 40px; color: #60a5fa; margin-top: 30px;">第一章：完美落幕</div>
+    <p style="margin-top: 50px; font-size: 24px; color: #94a3b8;">準備進入第二章：簡易指揮法教學</p>
+</div>
 
-            // 運用 CSS transition 做滑順的模擬減速
-            canvas.style.transform = `rotate(${currentRotation}deg)`;
-
-            // 模擬轉動時的「嘀嗒」音效
-            let tickCount = 0;
-            const totalTicks = 25;
-            function runTick() {
-                if (tickCount < totalTicks) {
-                    playTickSound();
-                    tickCount++;
-                    // 越後面間隔越長（模擬減速）
-                    setTimeout(runTick, 100 + (tickCount * 12));
-                }
-            }
-            runTick();
-
-            // 4 秒後（對應 CSS transition 4s）計算誰中獎
-            setTimeout(() => {
-                // 計算停止後的指針落點 (指針在正上方，即 -90 度或 270 度位置)
-                const actualDegrees = (currentRotation % 360);
-                // 轉換為 Canvas 座標系中的弧度落點
-                const pointerAngle = (((270 - actualDegrees) % 360 + 360) % 360) * Math.PI / 180;
-                
-                let winnerIndex = Math.floor(pointerAngle / segmentAngle) % numSegments;
-                if(winnerIndex < 0) winnerIndex += numSegments;
-
-                // 秀出中獎畫面並彈奏和弦
-                document.getElementById("winnerName").innerText = students[winnerIndex];
-                document.getElementById("winnerOverlay").classList.add("active");
-                playWinSound();
-            }, 4000);
-        }
-
-        function closeOverlay() {
-            document.getElementById("winnerOverlay").classList.remove("active");
-            spinBtn.disabled = false;
-        }
-
-        // 初始繪製
-        drawWheel();
-    </script>
 </body>
 </html>
+
