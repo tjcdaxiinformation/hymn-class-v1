@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>天籟合聲與指揮工作坊 - 完整合一教案簡報</title>
+    <title>羅浮高中生命教育 - 天籟合聲與指揮工作坊</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@700;900&family=Noto+Sans+TC:wght@500;900&display=swap" rel="stylesheet">
@@ -51,8 +51,8 @@
             border-bottom: 2px solid #334155;
             padding-bottom: 15px;
         }
-        .header h2 { font-size: 36px; font-weight: 900; color: #fbbf24; }
-        .header .badge { background: #1e293b; padding: 6px 16px; border-radius: 30px; font-size: 16px; color: #94a3b8; border: 1px solid #475569; }
+        .header h2 { font-size: 32px; font-weight: 900; color: #fbbf24; }
+        .header .badge { background: #1e293b; padding: 6px 16px; border-radius: 30px; font-size: 14px; color: #94a3b8; border: 1px solid #475569; max-width: 500px; text-align: right; }
 
         /* 內容佈局 */
         .content {
@@ -61,6 +61,7 @@
             align-items: center;
             justify-content: center;
             margin: 20px 0;
+            position: relative;
         }
         .grid-2 {
             display: grid;
@@ -94,8 +95,8 @@
             filter: drop-shadow(0 0 10px #00f2fe);
         }
 
-        /* 點名轉盤樣式 */
-        .wheel-container { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; }
+        /* 點名轉盤樣式與動態名單修改器 */
+        .wheel-container { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; position: relative; }
         .wheel-wrapper { position: relative; width: 340px; height: 340px; margin-bottom: 15px; }
         .pointer { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-top: 30px solid #ff007f; z-index: 10; filter: drop-shadow(0 0 5px #ff007f); }
         canvas { width: 100%; height: 100%; border-radius: 50%; transition: transform 4s cubic-bezier(0.1, 0.8, 0.1, 1); }
@@ -103,6 +104,10 @@
         .btn-spin:hover { transform: scale(1.05); box-shadow: 0 0 25px #00f2fe; }
         .btn-spin:disabled { background: #555; color: #888; box-shadow: none; }
         .winner-display { font-size: 32px; font-weight: 900; color: #ff007f; margin-top: 10px; height: 40px; text-shadow: 0 0 10px rgba(255,0,127,0.5); }
+        
+        /* 右上角修改名單設定 */
+        .settings-trigger { position: absolute; top: -15px; right: 0; background: rgba(51, 65, 85, 0.8); border: 1px solid #475569; color: #cbd5e1; padding: 8px 16px; border-radius: 8px; font-size: 16px; cursor: pointer; font-weight: bold; transition: all 0.2s; z-index: 50; }
+        .settings-trigger:hover { background: #3b82f6; color: #fff; box-shadow: 0 0 10px rgba(59,130,246,0.5); }
 
         /* 彩色簡譜樣式 */
         .score-table { width: 100%; border-collapse: collapse; }
@@ -125,22 +130,22 @@
     <!-- Slide 1: 封面 -->
     <div class="slide">
         <div class="header">
-            <h2>天籟合聲與指揮工作坊</h2>
-            <div class="badge">60 Mins Crash Course</div>
+            <h2>真耶穌教會羅浮福音中心</h2>
+            <div class="badge">羅浮高中生命教育工作坊</div>
         </div>
         <div class="content" style="flex-direction: column; text-align: center;">
-            <h1 style="font-size: 64px; color: #fbbf24; font-weight: 900; margin-bottom: 20px; text-shadow: 0 0 20px rgba(251,191,36,0.3);">探索傳統讚美詩四部合聲之美</h1>
+            <h1 style="font-size: 56px; color: #fbbf24; font-weight: 900; margin-bottom: 20px; text-shadow: 0 0 20px rgba(251,191,36,0.3); line-height: 1.3;">探索傳統讚美詩四部合聲之美</h1>
             <p style="font-size: 28px; color: #94a3b8; max-width: 800px;">釋放天生美好的歌喉・用身體主宰全場的音樂遊戲</p>
-            <div style="margin-top: 40px; padding: 20px 40px; background: rgba(255,255,255,0.05); border-radius: 50px; font-size: 20px; color: #38bdf8; font-weight: bold; border: 1px solid rgba(56,189,248,0.2);">主講人：老師 ＆ 電子琴司琴</div>
+            <div style="margin-top: 40px; padding: 20px 40px; background: rgba(255,255,255,0.05); border-radius: 50px; font-size: 20px; color: #38bdf8; font-weight: bold; border: 1px solid rgba(56,189,248,0.2);">主辦單位：真耶穌教會羅浮福音中心</div>
         </div>
-        <div class="footer"><span>示範曲目：《奇異恩典》</span><span>大螢幕互動專用教材</span></div>
+        <div class="footer"><span>示範曲目：《奇異恩典》</span><span>羅浮高中生命教育專用</span></div>
     </div>
 
     <!-- Slide 2: 第一節課 - 破冰階段 -->
     <div class="slide">
         <div class="header">
             <h2>第一節課：體驗四部合聲之美</h2>
-            <div class="badge">1. 破冰與音域盲測 (5 Mins)</div>
+            <div class="badge">羅浮高中生命教育</div>
         </div>
         <div class="content">
             <div class="grid-2">
@@ -163,14 +168,14 @@
                 </div>
             </div>
         </div>
-        <div class="footer"><span>不看傳統五線譜，全憑泰雅族天生極佳的直覺與音感！</span><span>設備運用：電子琴即時音效</span></div>
+        <div class="footer"><span>不看傳統五線譜，全憑羅浮高中學生天生極佳的直覺與音感！</span><span>真耶穌教會羅浮福音中心</span></div>
     </div>
 
     <!-- Slide 3: 第一節課 - 音場堆疊 -->
     <div class="slide">
         <div class="header">
             <h2>第一節課：體驗四部合聲之美</h2>
-            <div class="badge">2. 感官層次堆疊 (10 Mins)</div>
+            <div class="badge">羅浮高中生命教育</div>
         </div>
         <div class="content">
             <div class="grid-2">
@@ -187,7 +192,7 @@
                     <ul>
                         <li><strong>大螢幕視覺引導：</strong> 拋開繁複樂理，看著大螢幕上的色彩線條波動。</li>
                         <li><strong>包容跑調：</strong> 有人唱錯時，司琴彈搞笑滑音，老師：「這叫前衛爵士風，很酷！我們再微調一下就變天籟！」</li>
-                        <li><strong>天賦釋放：</strong> 泰雅族對三度與五度合音有天生直覺，聽一次就能抓到相對音高。</li>
+                        <li><strong>天賦釋放：</strong> 羅浮高中的孩子們對合音有天生直覺，聽一次就能抓到相對音高。</li>
                     </ul>
                 </div>
             </div>
@@ -195,39 +200,11 @@
         <div class="footer"><span>點題：少說教、多體驗、大聲唱</span><span>讓聲音在教室裡完美交融</span></div>
     </div>
 
-    <!-- Slide 4: 第一節課 - 勇士公主對決 -->
-    <div class="slide">
-        <div class="header">
-            <h2>第一節課：體驗四部合聲之美</h2>
-            <div class="badge">3. 勇士與公主的合聲對決 (15 Mins)</div>
-        </div>
-        <div class="content">
-            <div class="grid-2">
-                <div>
-                    <h3>⚔️ 擂台賽規則</h3>
-                    <ul>
-                        <li><strong>團體對抗：</strong> 現場4-6人平分成兩組（如「大山勇士隊」vs「大崩壁歌神隊」）。</li>
-                        <li><strong>任務分工：</strong> A組負責在主旋律狂飆，B組負責在第二句「我罪已得赦免」切入和弦。</li>
-                        <li><strong>即時反饋：</strong> 哪一組唱得準、聲音亮，司琴就在琴上彈奏慶祝音效，老師在大螢幕上記分。</li>
-                    </ul>
-                </div>
-                <div class="diagram-box" style="border-color: #ff719a;">
-                    <h4 style="font-size: 24px; color: #ff719a; margin-bottom: 15px;">舞台成就感</h4>
-                    <p style="font-size: 20px; color: #e2e8f0; line-height: 1.6;">
-                        當兩組聲音交錯重疊、產生完美共振的瞬間，給予極大讚賞：<br><br>
-                        <span style="font-size: 26px; color: #00f2fe; font-weight: 900;">「這根本是國家音樂廳等級的實力！」</span>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="footer"><span>建立自信心，為第二節課的「主控全場」做完美鋪墊</span><span>接下來進入全曲實戰譜表</span></div>
-    </div>
-
-    <!-- Slide 5: 第一節課 - 彩色簡譜 P1 -->
+    <!-- Slide 4: 第一節課 - 彩色簡譜 P1 -->
     <div class="slide">
         <div class="header">
             <h2>第一節課：全曲彩色簡譜實戰</h2>
-            <div class="badge">奇異恩典 (Page 1 / 2)</div>
+            <div class="badge">羅浮高中生命教育 - 奇異恩典 (1/2)</div>
         </div>
         <div class="content">
             <table class="score-table">
@@ -288,14 +265,14 @@
                 </tr>
             </table>
         </div>
-        <div class="footer"><span>🔴 高音部：粉紅 | 🟢 中音部：綠色</span><span>司琴：和弦對齊 G - C - G - D</span></div>
+        <div class="footer"><span>🔴 高音部：粉紅 | 🟢 中音部：綠色</span><span>司琴伴奏和弦：G - C - G - D</span></div>
     </div>
 
-    <!-- Slide 6: 第一節課 - 彩色簡譜 P2 -->
+    <!-- Slide 5: 第一節課 - 彩色簡譜 P2 -->
     <div class="slide">
         <div class="header">
             <h2>第一節課：全曲彩色簡譜實戰</h2>
-            <div class="badge">奇異恩典 (Page 2 / 2)</div>
+            <div class="badge">羅浮高中生命教育 - 奇異恩典 (2/2)</div>
         </div>
         <div class="content">
             <table class="score-table">
@@ -356,33 +333,36 @@
                 </tr>
             </table>
         </div>
-        <div class="footer"><span>🔵 次中音：天藍 | 🟣 低音部：紫色</span><span>盯緊自己的顏色，享受共鳴！</span></div>
+        <div class="footer"><span>🔵 次中音：天藍 | 🟣 低音部：紫色</span><span>盯緊自己的顏色，享受震撼共鳴！</span></div>
     </div>
 
-    <!-- Slide 7: 中場過渡 - 點名轉盤 -->
+    <!-- Slide 6: 第二節課 - 點名轉盤 (含動態名稱設定) -->
     <div class="slide">
         <div class="header">
             <h2>第二節課：誰是天籟指揮大師？</h2>
-            <div class="badge">互動隨機抽籤輪轉盤</div>
+            <div class="badge">真耶穌教會羅浮福音中心</div>
         </div>
         <div class="content" style="margin: 0;">
+            <!-- 右上角修改名單設定按鈕 -->
+            <button class="settings-trigger" onclick="editStudentList()">⚙️ 修改名單設定</button>
+            
             <div class="wheel-container">
                 <div class="wheel-wrapper">
                     <div class="pointer"></div>
-                    <canvas id="wheel" width="400" height="400"></canvas>
+                    <canvas id="wheel" width="340" height="340"></canvas>
                 </div>
                 <button class="btn-spin" id="spinBtn" onclick="spinWheel()">🔥 召喚今日大師 🔥</button>
                 <div class="winner-display" id="winnerName"></div>
             </div>
         </div>
-        <div class="footer"><span>點擊按鈕啟動電子琴和弦特效</span><span>抽中者立刻上台掌控全場！</span></div>
+        <div class="footer"><span>可點擊右上角隨時更改現場學生姓名</span><span>抽中者立刻上台掌握全場！</span></div>
     </div>
 
-    <!-- Slide 8: 指揮法第一階段 - 幾何軌跡 -->
+    <!-- Slide 7: 指揮法 - 幾何軌跡 -->
     <div class="slide">
         <div class="header">
             <h2>第二節課：3/4 拍指揮實戰</h2>
-            <div class="badge">第一階段：軌跡與口訣</div>
+            <div class="badge">羅浮高中生命教育 - 軌跡與口訣</div>
         </div>
         <div class="content">
             <div class="grid-2">
@@ -408,14 +388,14 @@
                 </div>
             </div>
         </div>
-        <div class="footer"><span>請全班起立，用整個身體律動一起畫出三角形！</span><span>對應詩歌：《奇異恩典》前奏</span></div>
+        <div class="footer"><span>全班起立，用整個身體律動一起畫出三角形！</span><span>對應詩歌：《奇異恩典》前奏</span></div>
     </div>
 
-    <!-- Slide 9: 指揮法第二階段 - 音量與動態 -->
+    <!-- Slide 8: 指揮法 - 音量與動態 -->
     <div class="slide">
         <div class="header">
             <h2>第二節課：3/4 拍指揮實戰</h2>
-            <div class="badge">第二階段：動態與音量超能力</div>
+            <div class="badge">羅浮高中生命教育 - 動態與音量超能力</div>
         </div>
         <div class="content">
             <div class="grid-2">
@@ -434,11 +414,11 @@
         <div class="footer"><span>台上指揮「手張多大，聲音就多大」</span><span>考驗團隊默契與指揮的主宰力</span></div>
     </div>
 
-    <!-- Slide 10: 指揮法第三階段 - 起拍與精彩收尾 -->
+    <!-- Slide 9: 指揮法 - 起拍與精彩收尾 -->
     <div class="slide">
         <div class="header">
             <h2>第二節課：3/4 拍指揮實戰</h2>
-            <div class="badge">第三階段：關鍵起拍與瞬間收尾</div>
+            <div class="badge">羅浮高中生命教育 - 關鍵起拍與瞬間收尾</div>
         </div>
         <div class="content">
             <div class="grid-2">
@@ -466,40 +446,62 @@
     </div>
 
     <script>
-        // 隨機轉盤腳本
-        const students = ["阿信", "保羅", "尤幹", "瓦旦", "哈勇", "莎韻"];
+        // 預設名單
+        let students = ["阿信", "保羅", "尤幹", "瓦旦", "哈勇", "莎韻"];
         const colors = ["#ff007f", "#7f00ff", "#00f2fe", "#00ff7f", "#ffcf00", "#ff5f00"];
         const canvas = document.getElementById("wheel");
         const ctx = canvas.getContext("2d");
         const spinBtn = document.getElementById("spinBtn");
-        const numSegments = students.length;
-        const segmentAngle = (2 * Math.PI) / numSegments;
+        let numSegments = students.length;
+        let segmentAngle = (2 * Math.PI) / numSegments;
         let currentRotation = 0;
 
+        // 重新畫輪轉盤的邏輯
         function drawWheel() {
+            numSegments = students.length;
+            segmentAngle = (2 * Math.PI) / numSegments;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
             for (let i = 0; i < numSegments; i++) {
                 const angle = i * segmentAngle;
                 ctx.beginPath();
                 ctx.fillStyle = colors[i % colors.length];
-                ctx.moveTo(200, 200);
-                ctx.arc(200, 200, 190, angle, angle + segmentAngle);
-                ctx.lineTo(200, 200);
+                ctx.moveTo(170, 170);
+                ctx.arc(170, 170, 160, angle, angle + segmentAngle);
+                ctx.lineTo(170, 170);
                 ctx.fill();
                 ctx.strokeStyle = "#0f172a";
                 ctx.lineWidth = 3;
                 ctx.stroke();
 
                 ctx.save();
-                ctx.translate(200, 200);
+                ctx.translate(170, 170);
                 ctx.rotate(angle + segmentAngle / 2);
                 ctx.textAlign = "right";
                 ctx.fillStyle = "#fff";
-                ctx.font = "bold 22px sans-serif";
+                ctx.font = "bold 20px sans-serif";
                 ctx.shadowColor = "black";
                 ctx.shadowBlur = 4;
-                ctx.fillText(students[i], 170, 8);
+                ctx.fillText(students[i], 145, 6);
                 ctx.restore();
+            }
+        }
+
+        // 右上角彈出式修改名單函式
+        function editStudentList() {
+            const currentListStr = students.join(", ");
+            const userInput = prompt("請輸入學員名單（名字之間請用逗號或空格隔開）：", currentListStr);
+            if (userInput !== null) {
+                // 清理字串，支援中英文逗號與空格分割
+                const cleanInput = userInput.replace(/，/g, ',').split(/[\s,]+/);
+                const newList = cleanInput.filter(name => name.trim() !== "");
+                if (newList.length >= 2) {
+                    students = newList;
+                    document.getElementById("winnerName").innerText = "名單更新成功！";
+                    drawWheel();
+                } else {
+                    alert("請至少輸入2位學員的名字，輪轉盤才能正常轉動喔！");
+                }
             }
         }
 
@@ -552,6 +554,7 @@
             }, 4000);
         }
 
+        // 初始化繪製
         drawWheel();
     </script>
 </body>
