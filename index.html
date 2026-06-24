@@ -1,296 +1,459 @@
-[slides]
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>奇異恩典：合聲體驗視覺教材</title>
+    <title>天籟合聲與指揮工作坊 - 完整教案</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;700&family=Noto+Sans+TC:wght@500;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@700;900&family=Noto+Sans+TC:wght@500;900&display=swap" rel="stylesheet">
     <style>
-        /* 核心設計規範：專為大螢幕投影優化 */
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             background-color: #020617;
-            display: grid;
-            gap: 20px;
-            grid-template-columns: 1fr;
-            margin: 0;
-            min-height: 100vh;
-            padding: 20px 0;
-            place-items: center;
             color: #f8fafc;
+            font-family: 'Urbanist', 'Noto Sans TC', sans-serif;
+            overflow-x: hidden;
         }
 
-        .slide-container {
-            align-items: center;
-            background-color: #0f172a;
+        /* 簡報頁面通用外框 */
+        .slide {
+            width: 1280px;
+            height: 720px;
+            background: #0f172a;
+            margin: 40px auto;
             border-radius: 16px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            position: relative;
+            padding: 40px 60px;
             display: flex;
             flex-direction: column;
-            font-family: 'Urbanist', 'Noto Sans TC', sans-serif;
-            height: 720px;
-            justify-content: center;
+            justify-content: space-between;
             overflow: hidden;
-            padding: 60px;
-            position: relative;
-            width: 1280px;
         }
 
-        /* 裝飾性背景：泰雅織紋感與音樂波律 */
-        .slide-container::before {
+        /* 科技感炫光背景 */
+        .slide::before {
             content: '';
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 10% 10%, rgba(244, 63, 94, 0.1), transparent 40%),
-                        radial-gradient(circle at 90% 90%, rgba(59, 130, 246, 0.15), transparent 40%);
+            background: radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.15), transparent 40%),
+                        radial-gradient(circle at 20% 80%, rgba(244, 63, 94, 0.1), transparent 40%);
             z-index: 0;
         }
+        .slide > * { position: relative; z-index: 1; }
 
-        .slide-container > * { position: relative; z-index: 1; }
+        /* 頂部標題 */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #334155;
+            padding-bottom: 15px;
+        }
+        .header h2 { font-size: 36px; font-weight: 900; color: #fbbf24; }
+        .header .badge { background: #1e293b; padding: 6px 16px; border-radius: 30px; font-size: 16px; color: #94a3b8; border: 1px solid #475569; }
 
-        /* 字體與顏色規範 */
-        h1 { font-size: 85px; font-weight: 900; color: #fbbf24; margin: 0; text-shadow: 0 4px 12px rgba(0,0,0,0.5); }
-        .slide-title { font-size: 48px; font-weight: 900; margin-bottom: 40px; text-align: left; width: 100%; color: #60a5fa; border-left: 12px solid #fbbf24; padding-left: 25px; }
-        
-        /* 簡譜專用樣式 */
-        .jianpu-container { width: 100%; background: rgba(30, 41, 59, 0.8); border-radius: 20px; padding: 30px; border: 1px solid #334155; }
-        .jianpu-row { display: flex; align-items: flex-start; margin-bottom: 25px; font-family: monospace; }
-        .jianpu-label { width: 150px; font-size: 24px; font-weight: 700; padding-top: 10px; }
-        .jianpu-notes { display: flex; flex-grow: 1; gap: 30px; font-size: 56px; font-weight: 900; letter-spacing: 5px; }
-        
-        /* 聲部顏色 */
-        .c-high { color: #fb7185; }  /* 高音部 - 玫瑰紅 */
-        .c-mid { color: #4ade80; }   /* 中音部 - 翠綠 */
-        .c-low { color: #60a5fa; }   /* 低音部 - 寶石藍 */
-        .c-chord { color: #facc15; } /* 和弦 - 亮金 */
-        .c-lyric { color: #f8fafc; font-size: 32px; font-family: 'Noto Sans TC'; margin-top: 10px; }
+        /* 內容佈局 */
+        .content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            width: 100%;
+            height: 100%;
+            align-items: center;
+        }
 
-        /* 版式定義 */
-        .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; width: 100%; }
-        .content-area { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; width: 100%; }
-        
-        .chord-box { background: #fbbf24; color: #020617; padding: 10px 20px; border-radius: 12px; font-size: 48px; font-weight: 900; display: inline-block; margin-bottom: 15px; }
+        /* 核心大字與清單 */
+        h3 { font-size: 40px; color: #38bdf8; margin-bottom: 20px; font-weight: 900; }
+        p { font-size: 24px; line-height: 1.6; color: #cbd5e1; }
+        ul { list-style: none; }
+        li { font-size: 24px; margin-bottom: 15px; position: relative; padding-left: 35px; color: #e2e8f0; }
+        li::before { content: '⚡'; position: absolute; left: 0; color: #fbbf24; }
 
-        .tile { background: #1e293b; padding: 30px; border-radius: 20px; text-align: center; border: 1px solid #334155; }
-        .tile i { font-size: 40px; color: #fbbf24; margin-bottom: 15px; }
-        
-        /* 表格樣式 */
-        table { width: 100%; border-collapse: collapse; }
-        th { font-size: 24px; color: #94a3b8; text-align: left; padding: 15px; border-bottom: 2px solid #334155; }
-        td { padding: 20px 15px; font-size: 42px; font-weight: 900; border-bottom: 1px solid #1e293b; }
+        /* 指揮幾何圖形圖解 */
+        .diagram-box {
+            background: rgba(30, 41, 59, 0.7);
+            border: 2px solid #475569;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .triangle-svg {
+            width: 250px;
+            height: 250px;
+            margin: 20px auto;
+            filter: drop-shadow(0 0 10px #00f2fe);
+        }
 
-        .quote-layout blockquote { font-size: 52px; font-style: italic; line-height: 1.3; color: #f1f5f9; text-align: center; }
+        /* 點名轉盤樣式 */
+        .wheel-container { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; }
+        .wheel-wrapper { position: relative; width: 340px; height: 340px; margin-bottom: 15px; }
+        .pointer { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-top: 30px solid #ff007f; z-index: 10; filter: drop-shadow(0 0 5px #ff007f); }
+        canvas { width: 100%; height: 100%; border-radius: 50%; transition: transform 4s cubic-bezier(0.1, 0.8, 0.1, 1); }
+        .btn-spin { background: linear-gradient(45deg, #00f2fe 0%, #4facfe 100%); color: #10111a; font-size: 1.5rem; font-weight: bold; padding: 12px 35px; border: none; border-radius: 50px; cursor: pointer; box-shadow: 0 0 15px #00f2fe; transition: all 0.2s; }
+        .btn-spin:hover { transform: scale(1.05); box-shadow: 0 0 25px #00f2fe; }
+        .btn-spin:disabled { background: #555; color: #888; box-shadow: none; }
+        .winner-display { font-size: 32px; font-weight: 900; color: #ff007f; margin-top: 10px; height: 40px; text-shadow: 0 0 10px rgba(255,0,127,0.5); }
+
+        /* 彩色簡譜樣式 */
+        .score-table { width: 100%; border-collapse: collapse; }
+        .part-row { height: 75px; }
+        .part-label { width: 110px; font-size: 20px; font-weight: 900; text-align: center; border-right: 3px solid #475569; }
+        .s-part { color: #ff719a; }
+        .a-part { color: #4ade80; }
+        .t-part { color: #38bdf8; }
+        .b-part { color: #a855f7; }
+        .l-part { color: #f8fafc; font-size: 24px; font-weight: 900; }
+        .measure-cell { text-align: center; font-size: 32px; font-weight: 900; letter-spacing: 2px; width: 140px; border-right: 1px dashed #334155; }
+        .measure-cell:last-child { border-right: 3px double #475569; }
+
+        /* 底部註記 */
+        .footer { display: flex; justify-content: space-between; font-size: 16px; color: #64748b; border-top: 1px solid #1e293b; padding-top: 15px; font-weight: bold; }
     </style>
 </head>
 <body>
 
-<div class="slide-container" id="slide1" style="background-image: linear-gradient(rgba(2, 6, 23, 0.8), rgba(2, 6, 23, 0.8)), url('http://googleusercontent.com/image_collection/image_retrieval/4983944559989458604'); background-size: cover;">
-    <div style="text-align: center;">
-        <h1>奇異恩典</h1>
-        <div style="font-size: 48px; color: #60a5fa; margin-top: 20px; font-weight: 700;">Amazing Grace</div>
-        <div style="font-size: 32px; color: #fbbf24; margin-top: 40px; letter-spacing: 5px;">天籟合聲・彩色簡譜互動教材</div>
-    </div>
-</div>
-
-<div class="slide-container" id="slide2">
-    <h2 class="slide-title">彩色聲部引導：聽見你的顏色</h2>
-    <div class="content-area">
-        <div style="display: flex; justify-content: space-around; width: 100%;">
-            <div class="tile" style="flex: 1; margin: 0 15px; border-top: 8px solid #fb7185;">
-                <i class="fa-solid fa-sun"></i>
-                <h3 class="c-high">太陽 (高音部)</h3>
-                <p>引領旋律的主角<br>清澈、明亮</p>
-            </div>
-            <div class="tile" style="flex: 1; margin: 0 15px; border-top: 8px solid #4ade80;">
-                <i class="fa-solid fa-leaf"></i>
-                <h3 class="c-mid">森林 (中音部)</h3>
-                <p>填補空間的溫暖<br>柔和、豐滿</p>
-            </div>
-            <div class="tile" style="flex: 1; margin: 0 15px; border-top: 8px solid #60a5fa;">
-                <i class="fa-solid fa-mountain"></i>
-                <h3 class="c-low">山谷 (低音部)</h3>
-                <p>穩定大地的基石<br>深沉、厚實</p>
-            </div>
+    <!-- Slide 1: 第一節課 - 彩色簡譜 P1 -->
+    <div class="slide">
+        <div class="header">
+            <h2>第一節課：體驗四部合聲之美</h2>
+            <div class="badge">奇異恩典 全曲簡譜 (1/2)</div>
         </div>
-    </div>
-</div>
-
-<div class="slide-container" id="slide3">
-    <h2 class="slide-title">第一句：奇異恩典，何等甘甜</h2>
-    <div class="content-area">
-        <div class="jianpu-container">
-            <div class="jianpu-row">
-                <div class="jianpu-label c-chord">和弦 (琴)</div>
-                <div class="jianpu-notes c-chord" style="font-size: 40px;">G - - | G - - | C - - | G - -</div>
-            </div>
-            <div class="jianpu-row">
-                <div class="jianpu-label c-high">高音部</div>
-                <div class="jianpu-notes c-high">
-                    <div>3 | 1 - 3 | 3 2 | 1 - 1 | 6 - 5 | 5 -</div>
-                </div>
-            </div>
-            <div class="jianpu-row">
-                <div class="jianpu-label c-mid">中音部</div>
-                <div class="jianpu-notes c-mid">
-                    <div>3 | 3 - 5 | 5 4 | 3 - 3 | 1 - 3 | 3 -</div>
-                </div>
-            </div>
-            <div class="jianpu-row">
-                <div class="jianpu-label" style="color: #94a3b8;">歌詞</div>
-                <div class="jianpu-notes c-lyric">
-                    <div>(奇) | 異 - (恩) | 典 - 何 | 等 - (甘) | 甜 - - | - -</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="slide-container" id="slide4">
-    <h2 class="slide-title">第二句：我罪已得赦免</h2>
-    <div class="content-area">
-        <div class="jianpu-container">
-            <div class="jianpu-row">
-                <div class="jianpu-label c-chord">和弦 (琴)</div>
-                <div class="jianpu-notes c-chord" style="font-size: 40px;">G - - | G - - | G - - | D - - | G - -</div>
-            </div>
-            <div class="jianpu-row">
-                <div class="jianpu-label c-high">高音部</div>
-                <div class="jianpu-notes c-high">
-                    <div>3 | 1 - 3 | 3 2 | 1 - 1 | 2 - - | 5 -</div>
-                </div>
-            </div>
-            <div class="jianpu-row">
-                <div class="jianpu-label c-mid">中音部</div>
-                <div class="jianpu-notes c-mid">
-                    <div>3 | 3 - 5 | 5 4 | 3 - 3 | 4 - - | 7 -</div>
-                </div>
-            </div>
-            <div class="jianpu-row">
-                <div class="jianpu-label" style="color: #94a3b8;">歌詞</div>
-                <div class="jianpu-notes c-lyric">
-                    <div>(我) | 罪 - (已) | 得 - 赦 | 免 - ( - ) | - - - | -</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="slide-container" id="slide5">
-    <h2 class="slide-title">山谷的力量：穩定低音 (Bass)</h2>
-    <div class="content-area">
-        <div class="two-column">
-            <div>
-                <h3>低音組任務</h3>
-                <p>司琴彈奏和弦根音，低音組同學看著數字唱出如山脈般的穩定感：</p>
-                <div class="jianpu-container" style="margin-top: 20px;">
-                    <div class="jianpu-notes c-low" style="font-size: 80px;">
-                        5_ . 1_ . 5_ . 2_ . 5_
-                    </div>
-                    <div class="c-lyric" style="text-align: center;">咚 . 咚 . 咚 . 咚 . 咚</div>
-                </div>
-            </div>
-            <div class="image-wrapper">
-                <img src="http://googleusercontent.com/image_collection/image_retrieval/16476658981232659273" alt="Piano bass keys">
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="slide-container" id="slide6">
-    <h2 class="slide-title">司琴配合手冊 (Piano Guide)</h2>
-    <div class="content-area">
-        <div class="two-column">
-            <div>
-                <div class="chord-box">G Major</div>
-                <p>左手強調強拍 (1)，右手輕彈 (2, 3)</p>
-                <div class="chord-box">C Major</div>
-                <p>增加溫暖感，引導中音部進入</p>
-                <div class="chord-box">D Major</div>
-                <p>在句尾創造懸念，準備回到 G</p>
-            </div>
-            <div class="image-wrapper">
-                <img src="http://googleusercontent.com/image_collection/image_retrieval/6499959961721726842" alt="Sound wave visualization">
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="slide-container" id="slide7">
-    <h2 class="slide-title">合聲堆疊實驗 (Step-by-Step)</h2>
-    <div class="content-area">
-        <table>
-            <thead>
-                <tr>
-                    <th>步驟</th>
-                    <th>加入成員</th>
-                    <th>視覺訊號</th>
+        <div class="content">
+            <table class="score-table">
+                <tr class="part-row s-part">
+                    <td class="part-label">Soprano</td>
+                    <td class="measure-cell" style="width: 70px;">5</td>
+                    <td class="measure-cell">1 - 3 1</td>
+                    <td class="measure-cell">3 - 2</td>
+                    <td class="measure-cell">1 - 6</td>
+                    <td class="measure-cell">5 - 5</td>
+                    <td class="measure-cell">1 - 3 1</td>
+                    <td class="measure-cell">3 - 2</td>
+                    <td class="measure-cell">5 -</td>
                 </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1. 啟航</td>
-                    <td>司琴彈奏前奏</td>
-                    <td class="c-chord">黃色燈光</td>
+                <tr class="part-row a-part">
+                    <td class="part-label">Alto</td>
+                    <td class="measure-cell">3</td>
+                    <td class="measure-cell">3 - 5</td>
+                    <td class="measure-cell">5 - 4</td>
+                    <td class="measure-cell">3 - 4</td>
+                    <td class="measure-cell">3 - 3</td>
+                    <td class="measure-cell">3 - 5</td>
+                    <td class="measure-cell">5 - 5</td>
+                    <td class="measure-cell">5 -</td>
                 </tr>
-                <tr>
-                    <td>2. 根基</td>
-                    <td>低音組加入 (咚...)</td>
-                    <td class="c-low">藍色燈光</td>
+                <tr class="part-row l-part">
+                    <td class="part-label" style="color: #64748b; font-size: 16px;">歌詞</td>
+                    <td class="measure-cell" style="font-size: 20px; color: #94a3b8;">(前奏)</td>
+                    <td class="measure-cell">何等奇</td>
+                    <td class="measure-cell">妙，救</td>
+                    <td class="measure-cell">主愛</td>
+                    <td class="measure-cell">憐，救</td>
+                    <td class="measure-cell">我深</td>
+                    <td class="measure-cell">重罪</td>
+                    <td class="measure-cell">犯！</td>
                 </tr>
-                <tr>
-                    <td>3. 靈魂</td>
-                    <td>高音組唱出主旋律</td>
-                    <td class="c-high">粉色燈光</td>
+                <tr class="part-row t-part">
+                    <td class="part-label">Tenor</td>
+                    <td class="measure-cell">1</td>
+                    <td class="measure-cell">5 - 1</td>
+                    <td class="measure-cell">1 - 7</td>
+                    <td class="measure-cell">1 - 1</td>
+                    <td class="measure-cell">1 - 1</td>
+                    <td class="measure-cell">5 - 1</td>
+                    <td class="measure-cell">1 - 7</td>
+                    <td class="measure-cell">1 -</td>
                 </tr>
-                <tr>
-                    <td>4. 天籟</td>
-                    <td>中音組切入三度合音</td>
-                    <td class="c-mid">綠色燈光</td>
+                <tr class="part-row b-part">
+                    <td class="part-label">Bass</td>
+                    <td class="measure-cell">1</td>
+                    <td class="measure-cell">1 - 1 3</td>
+                    <td class="measure-cell">5 - 5</td>
+                    <td class="measure-cell">6 - 4</td>
+                    <td class="measure-cell">1 - 1</td>
+                    <td class="measure-cell">1 - 1 3</td>
+                    <td class="measure-cell">5 - 4</td>
+                    <td class="measure-cell">3 -</td>
                 </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<div class="slide-container" id="slide8">
-    <div class="content-area">
-        <div class="quote-layout">
-            <blockquote>泰雅的聲音，是與山林的對話。<br>當我們合聲，我們便是一座完整的森林。</blockquote>
-            <cite style="font-size: 28px; color: #fbbf24;">— 音樂靈魂的覺醒</cite>
+            </table>
         </div>
+        <div class="footer"><span>🔴 高音部：粉紅 | 🟢 中音部：綠色</span><span>司琴：和弦對齊 G - C - G - D</span></div>
     </div>
-</div>
 
-<div class="slide-container" id="slide9">
-    <h2 class="slide-title">現場實戰練習</h2>
-    <div class="content-area">
-        <div class="tiled-content" style="display: flex; gap: 30px;">
-            <div class="tile" style="flex: 1;">
-                <div style="font-size: 32px; font-weight: 700; margin-bottom: 10px;">練習 1</div>
-                <p>全班齊唱<br>熟悉數字與節奏</p>
-            </div>
-            <div class="tile" style="flex: 1;">
-                <div style="font-size: 32px; font-weight: 700; margin-bottom: 10px;">練習 2</div>
-                <p>分組合音<br>看著顏色找對手</p>
-            </div>
-            <div class="tile" style="flex: 1;">
-                <div style="font-size: 32px; font-weight: 700; margin-bottom: 10px;">練習 3</div>
-                <p>閉上眼睛<br>用耳朵尋找彼此</p>
+    <!-- Slide 2: 第一節課 - 彩色簡譜 P2 -->
+    <div class="slide">
+        <div class="header">
+            <h2>第一節課：體驗四部合聲之美</h2>
+            <div class="badge">奇異恩典 全曲簡譜 (2/2)</div>
+        </div>
+        <div class="content">
+            <table class="score-table">
+                <tr class="part-row s-part">
+                    <td class="part-label">Soprano</td>
+                    <td class="measure-cell" style="width: 70px;">3</td>
+                    <td class="measure-cell">5 . 3 5 3</td>
+                    <td class="measure-cell">1 - 5</td>
+                    <td class="measure-cell">6 . 1 1 6</td>
+                    <td class="measure-cell">5 - 5</td>
+                    <td class="measure-cell">1 - 3 1</td>
+                    <td class="measure-cell">3 - 2</td>
+                    <td class="measure-cell">1 -</td>
+                </tr>
+                <tr class="part-row a-part">
+                    <td class="part-label">Alto</td>
+                    <td class="measure-cell">5</td>
+                    <td class="measure-cell">5 - 5</td>
+                    <td class="measure-cell">5 - 3</td>
+                    <td class="measure-cell">4 . 5 4</td>
+                    <td class="measure-cell">3 - 5</td>
+                    <td class="measure-cell">3 - 5</td>
+                    <td class="measure-cell">1 - 7</td>
+                    <td class="measure-cell">1 -</td>
+                </tr>
+                <tr class="part-row l-part">
+                    <td class="part-label" style="color: #64748b; font-size: 16px;">歌詞</td>
+                    <td class="measure-cell">我</td>
+                    <td class="measure-cell">前失</td>
+                    <td class="measure-cell">喪，今</td>
+                    <td class="measure-cell">被尋</td>
+                    <td class="measure-cell">回，瞎</td>
+                    <td class="measure-cell">眼今</td>
+                    <td class="measure-cell">得看</td>
+                    <td class="measure-cell">見。。。。</td>
+                </tr>
+                <tr class="part-row t-part">
+                    <td class="part-label">Tenor</td>
+                    <td class="measure-cell">1</td>
+                    <td class="measure-cell">3 . 1 3 1</td>
+                    <td class="measure-cell">1 - 1</td>
+                    <td class="measure-cell">1 - 6 1</td>
+                    <td class="measure-cell">1 - 1</td>
+                    <td class="measure-cell">1 - 1 3</td>
+                    <td class="measure-cell">5 - 4</td>
+                    <td class="measure-cell">3 -</td>
+                </tr>
+                <tr class="part-row b-part">
+                    <td class="part-label">Bass</td>
+                    <td class="measure-cell">1</td>
+                    <td class="measure-cell">1 - 1</td>
+                    <td class="measure-cell">3 - 1</td>
+                    <td class="measure-cell">4 . 3 4</td>
+                    <td class="measure-cell">1 - 3</td>
+                    <td class="measure-cell">6 - 5</td>
+                    <td class="measure-cell">5 - 5</td>
+                    <td class="measure-cell">1 -</td>
+                </tr>
+            </table>
+        </div>
+        <div class="footer"><span>🔵 次中音：天藍 | 🟣 低音部：紫色</span><span>高潮段落：全體三部/四部大合唱</span></div>
+    </div>
+
+    <!-- Slide 3: 第二節課 - 點名轉盤大螢幕互動 -->
+    <div class="slide">
+        <div class="header">
+            <h2>第二節課：誰是天籟指揮大師？</h2>
+            <div class="badge">互動隨機抽籤輪轉盤</div>
+        </div>
+        <div class="content" style="margin: 0;">
+            <div class="wheel-container">
+                <div class="wheel-wrapper">
+                    <div class="pointer"></div>
+                    <canvas id="wheel" width="400" height="400"></canvas>
+                </div>
+                <button class="btn-spin" id="spinBtn" onclick="spinWheel()">🔥 召喚今日大師 🔥</button>
+                <div class="winner-display" id="winnerName"></div>
             </div>
         </div>
+        <div class="footer"><span>點擊按鈕啟動電子琴和弦特效</span><span>抽中者立刻上台掌控全場！</span></div>
     </div>
-</div>
 
-<div class="slide-container" id="slide10" style="text-align: center;">
-    <h1 style="font-size: 100px;">讚美詩合聲課</h1>
-    <div style="font-size: 40px; color: #60a5fa; margin-top: 30px;">第一章：完美落幕</div>
-    <p style="margin-top: 50px; font-size: 24px; color: #94a3b8;">準備進入第二章：簡易指揮法教學</p>
-</div>
+    <!-- Slide 4: 指揮法第一階段 - 幾何軌跡 -->
+    <div class="slide">
+        <div class="header">
+            <h2>第二節課：3/4 拍指揮實戰</h2>
+            <div class="badge">第一階段：軌跡與口訣</div>
+        </div>
+        <div class="content">
+            <div class="grid-2">
+                <div>
+                    <h3>⚔️ 核心口訣：山頂的開山刀</h3>
+                    <ul>
+                        <li><strong>第一拍（強）：往下剁！</strong><br><small style="color:#94a3b8;">從最高點筆直切下，看準獵物、穩定重拍。</small></li>
+                        <li><strong>第二拍（弱）：向外揮！</strong><br><small style="color:#94a3b8;">順著重力自然往右側滑出，讓音樂呼吸。</small></li>
+                        <li><strong>第三拍（弱）：向上提！</strong><br><small style="color:#94a3b8;">斜斜畫出美麗弧線提回原點，預備下一拍。</small></li>
+                    </ul>
+                </div>
+                <div class="diagram-box">
+                    <h4 style="font-size:24px; color:#fbbf24; margin-bottom:10px;">3/4 拍幾何軌跡圖</h4>
+                    <svg class="triangle-svg" viewBox="0 0 100 100">
+                        <!-- 三角形軌跡動畫線 -->
+                        <path d="M 50 15 L 50 75 L 85 75 Z" fill="none" stroke="#00f2fe" stroke-width="4" stroke-linejoin="round"/>
+                        <!-- 箭頭與步驟 -->
+                        <circle cx="50" cy="15" r="4" fill="#ff007f"/>
+                        <text x="42" y="15" fill="#ff007f" font-size="8" font-weight="bold">起</text>
+                        <text x="54" y="50" fill="#cbd5e1" font-size="6">1. 往下剁</text>
+                        <text x="63" y="83" fill="#cbd5e1" font-size="6">2. 向外揮</text>
+                        <text x="70" y="45" fill="#cbd5e1" font-size="6">3. 向上提</text>
+                    </svg>
+                    <p style="font-size:18px; color:#a855f7;">配合司琴伴奏：蹦（1）- 恰（2）- 恰（3）</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer"><span>請全班起立，用整個身體律動一起畫出三角形！</span><span>對應詩歌：《奇異恩典》前奏</span></div>
+    </div>
 
+    <!-- Slide 5: 指揮法第二階段 - 音量與動態 -->
+    <div class="slide">
+        <div class="header">
+            <h2>第二節課：3/4 拍指揮實戰</h2>
+            <div class="badge">第二階段：動態與音量超能力</div>
+        </div>
+        <div class="content">
+            <div class="grid-2">
+                <div class="diagram-box" style="border-color:#4ade80;">
+                    <h3 style="color:#4ade80;">🐗 情境 A：打獵潛伏</h3>
+                    <p style="font-size:20px; text-align:left; margin-bottom:15px;"><strong>動作：雙手收在胸前，微幅擺動。</strong></p>
+                    <p style="font-size:18px; color:#94a3b8; text-align:left;">當歌曲進入第 5 小節「何等奇妙」，指揮把動作縮到最小。台下的四部合聲與司琴必須變成蚊子般的弱音（p），極致溫柔。</p>
+                </div>
+                <div class="diagram-box" style="border-color:#ff719a;">
+                    <h3 style="color:#ff719a;">🔥 情境 B：慶功狂歡</h3>
+                    <p style="font-size:20px; text-align:left; margin-bottom:15px;"><strong>動作：手臂大開，動作跨越胸膛。</strong></p>
+                    <p style="font-size:18px; color:#94a3b8; text-align:left;">進入第 9 小節「我前失喪，今被尋回」！指揮將雙手高舉過頭。台下學員啟動天生好歌喉，全開轟炸，釋放最強音（f）！</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer"><span>台上指揮「手張多大，聲音就多大」</span><span>考驗團隊默契與指揮的主宰力</span></div>
+    </div>
+
+    <!-- Slide 6: 指揮法第三階段 - 起拍與精彩收尾 -->
+    <div class="slide">
+        <div class="header">
+            <h2>第二節課：3/4 拍指揮實戰</h2>
+            <div class="badge">第三階段：關鍵起拍與瞬間收尾</div>
+        </div>
+        <div class="content">
+            <div class="grid-2">
+                <div>
+                    <h3>🌬️ 預備起拍：與團員同頻呼吸</h3>
+                    <p style="font-size:20px; color:#cbd5e1; margin-bottom:25px;">
+                        在司琴與歌聲切入前，指揮手勢必須**先往上提（代表吸氣）**，手落下的瞬間，全場才會整齊劃一地唱出第一個字。
+                    </p>
+                    <h3>🛑 瞬間收音：老鷹抓飛鼠</h3>
+                    <p style="font-size:20px; color:#cbd5e1;">
+                        最後一小節「得看見～」拉長音時，指揮右手在空中優雅畫圈。在最後一刻**「猛然捏拳」**！所有人必須在同一個萬分之一秒瞬間靜音（General Pause）。
+                    </p>
+                </div>
+                <div class="diagram-box" style="border-color:#fbbf24;">
+                    <h4 style="font-size:24px; color:#38bdf8; margin-bottom:15px;">大師世紀謝幕任務</h4>
+                    <ul style="text-align:left;">
+                        <li style="font-size:20px;">任務 1：用眼神和呼吸帶領團員整齊開唱。</li>
+                        <li style="font-size:20px;">任務 2：副歌處任意切換大小聲整團員。</li>
+                        <li style="font-size:20px;">任務 3：結尾使出「老鷹抓飛鼠」帥氣收音！</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer"><span>飛鼠如果沒抓緊（有人偷超時拉長音），大師任務就扣分！</span><span>終極挑戰：結合彩色簡譜全曲演練</span></div>
+    </div>
+
+    <script>
+        // 隨機轉盤腳本
+        const students = ["阿信", "保羅", "尤幹", "瓦旦", "哈勇", "莎韻"];
+        const colors = ["#ff007f", "#7f00ff", "#00f2fe", "#00ff7f", "#ffcf00", "#ff5f00"];
+        const canvas = document.getElementById("wheel");
+        const ctx = canvas.getContext("2d");
+        const spinBtn = document.getElementById("spinBtn");
+        const numSegments = students.length;
+        const segmentAngle = (2 * Math.PI) / numSegments;
+        let currentRotation = 0;
+
+        function drawWheel() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < numSegments; i++) {
+                const angle = i * segmentAngle;
+                ctx.beginPath();
+                ctx.fillStyle = colors[i % colors.length];
+                ctx.moveTo(200, 200);
+                ctx.arc(200, 200, 190, angle, angle + segmentAngle);
+                ctx.lineTo(200, 200);
+                ctx.fill();
+                ctx.strokeStyle = "#0f172a";
+                ctx.lineWidth = 3;
+                ctx.stroke();
+
+                ctx.save();
+                ctx.translate(200, 200);
+                ctx.rotate(angle + segmentAngle / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#fff";
+                ctx.font = "bold 22px sans-serif";
+                ctx.shadowColor = "black";
+                ctx.shadowBlur = 4;
+                ctx.fillText(students[i], 170, 8);
+                ctx.restore();
+            }
+        }
+
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playTick() {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.frequency.setValueAtTime(600, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+            osc.start(); osc.stop(audioCtx.currentTime + 0.04);
+        }
+
+        function playChord() {
+            const now = audioCtx.currentTime;
+            [261.63, 329.63, 392.00, 523.25].forEach((f, i) => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                osc.type = "triangle";
+                osc.frequency.setValueAtTime(f, now + i * 0.06);
+                gain.gain.setValueAtTime(0.1, now + i * 0.06);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+                osc.start(now + i * 0.06); osc.stop(now + 0.5);
+            });
+        }
+
+        function spinWheel() {
+            audioCtx.resume();
+            spinBtn.disabled = true;
+            document.getElementById("winnerName").innerText = "正在呼喚大師...";
+            const extraDegrees = Math.floor(Math.random() * 360);
+            currentRotation += 4 * 360 + extraDegrees;
+            canvas.style.transform = `rotate(${currentRotation}deg)`;
+
+            let ticks = 0;
+            function doTick() {
+                if (ticks < 20) { playTick(); ticks++; setTimeout(doTick, 100 + (ticks * 15)); }
+            }
+            doTick();
+
+            setTimeout(() => {
+                const actualDegrees = (currentRotation % 360);
+                const pointerAngle = (((270 - actualDegrees) % 360 + 360) % 360) * Math.PI / 180;
+                let winner = Math.floor(pointerAngle / segmentAngle) % numSegments;
+                if(winner < 0) winner += numSegments;
+                document.getElementById("winnerName").innerText = `🎉 恭喜大師：${students[winner]}！ 🎉`;
+                playChord();
+                spinBtn.disabled = false;
+            }, 4000);
+        }
+
+        drawWheel();
+    </script>
 </body>
 </html>
-
